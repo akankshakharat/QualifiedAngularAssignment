@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Loan Calculator</title>
+	
+    
+    <style>
+       body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+	background:url(img.jpg);
+	
+	body {
+  background-image: url('img_girl.jpg');
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: 100% 100%;
+}
+	
+	 background: url('C:\Users\dubal\OneDrive\Desktop\yogeshwari\yogeshwari\img.jpg') center center no-repeat; /* Replace 'path/to/your/image.jpg' with the actual path to your image */
+    background-size: cover; /* Ensure the background image covers the entire form */
+}
+
+
+form {
+
+    width: 50%;
+    max-width: 600px;
+   
+    padding: 20px; /* Add padding to the form for better readability */
+}
+
+
+        label {
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        input {
+            width: 100%;
+            padding: 4px;
+            margin-bottom: 15px;
+            box-sizing: border-box;
+        }
+
+        button {
+            padding: 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+		#dropdowns{
+			 width: 100%;
+            padding: 8px;
+            margin-bottom: 15px;
+            box-sizing: border-box;
+			}
+    </style>
+</head>
+<body>
+    <form id="loanForm" onsubmit="calculateLoan(event)">
+	 <h2>Loan Details</h2>
+	 
+        <label for="employeeId">Employee ID:</label>
+        <input type="text" id="employeeId" required pattern="^E.{3,}$" placeholder="E followed by at least 3 characters">
+
+        <label for="name">Name:</label>
+        <input type="text" id="name" required>
+
+        <label for="address">Address:</label>
+        <input type="text" id="address" required>
+
+        <label for="designation" id="designation">Designation:</label>
+        <select id="dropdowns">
+            <option value="manager">Choose</option>
+            <option value="manager">Manager</option>
+            <option value="developer">Developer</option>
+            <option value="other">Other</option>
+        </select>
+
+        <label for="loanAmount">Loan Amount:</label>
+        <input type="number" id="loanAmount" required>
+
+        <label for="loanDate">Date of Loan Taken:</label>
+        <input type="date" id="loanDate" required>
+
+        <label for="interest">Interest:</label>
+        <input type="number" id="interest" required>
+
+        <label for="maturityDate">Maturity Date:</label>
+        <input type="date" id="maturityDate" required>
+
+        <button type="submit">Calculate Loan</button>
+    </form>
+
+    <script>
+        function calculateLoan(event) {
+            event.preventDefault();
+
+            // Fetching values from the form
+            const employeeId = document.getElementById('employeeId').value;
+            const designation = document.getElementById('designation').value;
+            const loanAmount = parseFloat(document.getElementById('loanAmount').value);
+            const interest = parseFloat(document.getElementById('interest').value);
+
+            // Check if the employee ID starts with 'E' and has a minimum length of 4 characters
+            if (!/^E.{3,}$/.test(employeeId)) {
+                alert("Employee ID must start with 'E' and have at least 4 characters.");
+                return;
+            }
+
+            // Calculate loan amount and interest based on designation
+            let loanDetails = {};
+            switch (designation) {
+                case 'manager':
+                    loanDetails.loanAmount = loanAmount + (0.1 * loanAmount);
+                    loanDetails.interestPayable = interest + (0.05 * interest);
+                    break;
+                case 'developer':
+                    loanDetails.loanAmount = loanAmount + (0.08 * loanAmount);
+                    loanDetails.interestPayable = interest + (0.03 * interest);
+                    break;
+                default:
+                    loanDetails.loanAmount = loanAmount + (0.05 * loanAmount);
+                    loanDetails.interestPayable = interest + (0.02 * interest);
+            }
+
+            // Display the calculated loan details
+			console.log(`Loan Amount: ${loanDetails.loanAmount.toFixed(2)}\nInterest Payable: ${loanDetails.interestPayable.toFixed(2)}`);
+            alert(`Loan Amount: ${loanDetails.loanAmount.toFixed(2)}\nInterest Payable: ${loanDetails.interestPayable.toFixed(2)}`);
+        }
+    </script>
+
+</body>
+</html>
